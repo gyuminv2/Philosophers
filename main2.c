@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <signal.h>
 
 int mails = 0;
 pthread_mutex_t mutex;
@@ -17,6 +18,7 @@ void* routine(){
 int main(){
 	pthread_t p1, p2;
 	pthread_mutex_init(&mutex, NULL);
+
 	if (pthread_create(&p1, NULL, &routine, NULL) != 0)
 		return 1;
 	if (pthread_create(&p2, NULL, &routine, NULL) != 0)
