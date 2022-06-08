@@ -11,24 +11,23 @@
 # **************************************************************************** #
 
 NAME = philo
-SRCS = 
-OBJS = 
+SRCS = ./main.c ./check_ac.av.c
+OBJS = $(SRCS:.c=.o)
 
 CC = cc
 \CFLAG = -Wall -Wextra -Werror
 CFLAG = -fsanitize=address -g3
-
 RM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAG) -o $(NAME)
+	$(CC) $(CFLAG) $(SRCS) -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)
 
-fclean:
+fclean:	clean
 	$(RM) $(NAME)
 	$(RM) *.dSYM
 

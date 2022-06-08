@@ -1,28 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
+#include "philo.h"
 
-int mails = 0;
-
-void* routine()
+int	main(int ac, char *av[])
 {
-	for (int i=0;i<1000000;i++)
-	{
-		mails++;
-	}
-	return 0;
-}
+	t_all	all;
 
-int main(){
-	pthread_t p1, p2;
-	if (pthread_create(&p1, NULL, &routine, NULL) != 0)
-		return 1;
-	if (pthread_create(&p2, NULL, &routine, NULL) != 0)
-		return 2;
-	if (pthread_join(p1, NULL) != 0)
-		return 3;
-	if (pthread_join(p2, NULL) != 0)
-		return 4;
-	printf("Number of mails : %d\n", mails);
-	return 0;
+	//if (check_ac_av(ac, av) != 0)
+	//	return (-1);
+	//init_all(all, ac, av);
+	//launch_threads
+	//join_threads
+	//free_all(all);
+	return (0);
 }
