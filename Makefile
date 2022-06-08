@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = philo
-SRCS = ./main.c ./check_ac.av.c
+SRCS = ./main.c ./check_ac_av.c
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
