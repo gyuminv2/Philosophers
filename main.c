@@ -14,6 +14,7 @@ int	main(int ac, char *av[])
 	philo = (t_philo *)malloc(sizeof(t_philo) * input->p_num);
 	if (!philo)
 		return (-1);
+	init_fork(philo, input);
 	init_philo(philo, input);
 	if(create_thread(philo, input))	// 성공시 0
 		return (-1);

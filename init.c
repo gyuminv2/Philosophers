@@ -29,7 +29,6 @@ void    init_philo(t_philo *philo, t_input *input)
 {
     int i = 0;
 
-    init_fork(philo, input);
     while (i < input->p_num)
     {
         philo[i].p_idx = i + 1;

@@ -39,5 +39,6 @@ int		check_ac_av(int ac, char *av[]);
 void	init_input(t_input *input, int ac, char *av[]);
 void	init_philo(t_philo *philo, t_input *input);
 int		create_thread(t_philo *philo,t_input *input);
+void    init_fork(t_philo *philo, t_input *input);
 
 #endif
