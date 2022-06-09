@@ -5,6 +5,7 @@ void    *play_philo(void *philo)
     t_philo *pho;
     
     pho = (t_philo *)philo;
+    return 0;
 }
 
 int create_thread(t_philo *philo,t_input *input)

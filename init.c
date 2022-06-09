@@ -2,11 +2,10 @@
 
 long    get_time()
 {
-    // struct  timeval t;
+    struct  timeval ms;
 
-    // gettimeofday(&t, NULL);
-    // return (t.tv_sec * 1000);
-    return 100;
+    gettimeofday(&ms, NULL);
+    return (ms.tv_usec);
 }
 
 void    init_fork(t_philo *philo, t_input *input)
