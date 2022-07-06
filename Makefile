@@ -11,24 +11,37 @@
 # **************************************************************************** #
 
 NAME = philo
-SRCS = ./main.c
+CC = cc
+CFLAG = -fsanitize=address -g3
+\CFLAG = -Wall -Wextra -Werror
+INC = ./includes
+
+SRCS = $(addprefix ./srcs/, main.c init.c thread.c free.c check_input.c)
 OBJS = $(SRCS:.c=.o)
 
-CC = cc
-\CFLAG = -Wall -Wextra -Werror
-CFLAG = -fsanitize=address -g3
+FTDIR = ./libft/
+FT = libft.a
+FTINC = ./libft/
+
 RM = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAG) $(SRCS) -o $(NAME)
+	make all -C $(FTDIR)
+	cp $(FTDIR)$(FT) ./$(FT)
+	$(CC) $(CFLAG) -I$(INC) -I$(FTINC) -o $@ $^ libft.a
+
+%.o : %.c
+	$(CC) $(CFLAG) -I$(INC) -I$(FTINC) -c $^ -o $@
 
 clean:
+	make fclean -C $(FTDIR)
 	$(RM) $(OBJS)
 
 fclean:	clean
 	$(RM) $(NAME)
+	$(RM) $(FT)
 	$(RM) *.dSYM
 
 re: fclean all
