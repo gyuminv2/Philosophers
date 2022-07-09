@@ -6,17 +6,17 @@
 #    By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 21:19:45 by gyumpark          #+#    #+#              #
-#    Updated: 2022/05/28 16:14:43 by gyumpark         ###   ########.fr        #
+#    Updated: 2022/07/09 12:33:11 by gyumpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAG = -fsanitize=address -g3
-\CFLAG = -Wall -Wextra -Werror
+\CFLAG = -fsanitize=address -g3
+CFLAG = -Wall -Wextra -Werror
 INC = ./includes
 
-SRCS = $(addprefix ./srcs/, main.c init.c thread.c free.c check_input.c)
+SRCS = $(addprefix ./srcs/, main.c init.c thread.c check_input.c)
 OBJS = $(SRCS:.c=.o)
 
 FTDIR = ./libft/

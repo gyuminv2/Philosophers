@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/09 12:30:51 by gyumpark          #+#    #+#             */
+/*   Updated: 2022/07/09 12:30:51 by gyumpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -34,7 +46,7 @@ typedef struct	s_philo
 	long			born_tm;
 	long			last_meal_tm;
 	long			die_tm;
-	char			*save;
+	char			*rtn;
 	t_input			*input;
 }	t_philo;
 

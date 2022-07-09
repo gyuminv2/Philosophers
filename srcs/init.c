@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/09 12:31:52 by gyumpark          #+#    #+#             */
+/*   Updated: 2022/07/09 12:31:54 by gyumpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void    init_input(t_input *input, int ac, char *av[])
@@ -44,13 +56,14 @@ void    init_philo(t_philo *philo, t_input *input)
     while (i < input->p_num)
     {
         philo[i].p_idx = i + 1;
-        philo[i].input = input;
-        philo[i].last_meal_tm = 0;
         philo[i].l_fork = &philo->n_fork[i];
         if (i == 0)
             philo[i].r_fork = &philo->n_fork[input->p_num - 1];
         else
             philo[i].r_fork = &philo->n_fork[i-1];
+        philo[i].last_meal_tm = 0;
+        philo[i].die_tm = -1;
+        philo[i].input = input;
         i++;
     }
 }

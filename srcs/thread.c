@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/09 12:31:57 by gyumpark          #+#    #+#             */
+/*   Updated: 2022/07/09 12:31:58 by gyumpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int create_thread(t_philo *philo,t_input *input)
@@ -30,22 +42,22 @@ void    *play_philo(void *philo)
 
     while (!pho->input->die_state)
     {
-        pho->save = ft_itoa(pho->p_idx);
+        pho->rtn = ft_itoa(pho->p_idx);
         if (eatting == 0)
             break;
         eat(pho);
         if (die_philo(pho, eatting))
         {
             pho->input->die_state = 1;
-            return (pho->save);
+            return (pho->rtn);
         }
         sleep_think(pho);
         if (die_philo(pho, eatting))
         {
             pho->input->die_state = 1;
-            return (pho->save);
+            return (pho->rtn);
         }
-        free(pho->save);
+        free(pho->rtn);
         if (eatting != 0)
             eatting--;
     }
