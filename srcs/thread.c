@@ -36,44 +36,68 @@ void    *play_philo(void *philo)
 {
     t_philo *pho;
     int     eatting;
+    char    *rtn;
     
     pho = (t_philo *)philo;
     eatting = pho->input->must_eat_cnt;
+    rtn = ft_itoa(pho->p_idx);
 
     while (!pho->input->die_state)
     {
-        pho->rtn = ft_itoa(pho->p_idx);
         if (eatting == 0)
-            break;
+            break; 
+        printf("first %d philo->last_meal_tm: %ld\n", pho->p_idx, pho->last_meal_tm);
+        if (pho->last_meal_tm > 0)
+        {
+            printf("씨발\n");
+            if (die_philo(pho, eatting))
+            {
+                pho->input->die_state = 1;
+                return (rtn);
+            }
+        }
         eat(pho);
         if (die_philo(pho, eatting))
         {
             pho->input->die_state = 1;
-            return (pho->rtn);
+            return (rtn);
         }
         sleep_think(pho);
         if (die_philo(pho, eatting))
         {
             pho->input->die_state = 1;
-            return (pho->rtn);
+            return (rtn);
         }
-        free(pho->rtn);
         if (eatting != 0)
             eatting--;
     }
+    free(rtn);
     return (ft_strdup(""));
+}
+
+void    ft_usleep(int time)
+{
+    long    target;
+
+    target = get_time() + (long)time;
+    while(target > get_time())
+    {
+        usleep(500);
+    }
 }
 
 void    eat(t_philo *philo)
 {
     pthread_mutex_lock(philo->l_fork);
     pthread_mutex_lock(philo->r_fork);
+    philo->last_meal_tm = get_time();
     printf("%ld phlio[%d] has taken a l_fork\n", get_time() - philo->born_tm, philo->p_idx);
     printf("%ld phlio[%d] has taken a r_fork\n", get_time() - philo->born_tm, philo->p_idx);
-    philo->last_meal_tm = get_time();
+    printf("eat %d philo->last_meal_tm: %ld\n", philo->p_idx, philo->last_meal_tm);
     pthread_mutex_lock(&philo->eat_status);
     printf("%ld phlio[%d] is a eating\n", get_time() - philo->born_tm, philo->p_idx);
-    usleep(philo->input->eat_time * 1000);
+    ft_usleep(philo->input->eat_time);
+    // usleep(philo->input->eat_time*1000);
     pthread_mutex_unlock(&philo->eat_status);
     pthread_mutex_unlock(philo->r_fork);
     pthread_mutex_unlock(philo->l_fork);
@@ -82,7 +106,8 @@ void    eat(t_philo *philo)
 void    sleep_think(t_philo *philo)
 {
     printf("%ld phlio[%d] is sleeping\n", get_time() - philo->born_tm, philo->p_idx);
-    usleep(philo->input->sleep_time * 1000);
+    ft_usleep(philo->input->sleep_time);
+    // usleep(philo->input->sleep_time*1000);
     printf("%ld phlio[%d] is thinking\n", get_time() - philo->born_tm, philo->p_idx);
 }
 
@@ -90,6 +115,7 @@ int     die_philo(t_philo *philo, int eat_cnt)
 {
     if (eat_cnt == 0)
         return (1);
+    printf("%d philo 시간: %ld || %d\n", philo->p_idx, (get_time() - philo->last_meal_tm), philo->input->die_time);
     if ((get_time() - philo->last_meal_tm) > philo->input->die_time)
     {
         printf("죽은시간: %ld || %d\n", (get_time() - philo->last_meal_tm), philo->input->die_time);

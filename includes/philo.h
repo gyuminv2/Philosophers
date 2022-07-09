@@ -46,7 +46,6 @@ typedef struct	s_philo
 	long			born_tm;
 	long			last_meal_tm;
 	long			die_tm;
-	char			*rtn;
 	t_input			*input;
 }	t_philo;
 
