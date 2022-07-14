@@ -34,8 +34,7 @@ typedef struct s_input
 	int				die_state;
 }	t_input;
 
-
-typedef struct	s_philo
+typedef struct s_philo
 {
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
@@ -52,24 +51,24 @@ typedef struct	s_philo
 /*
  *	main.c
  */
-int		check_input(int ac, char *av[]);
+int			check_input(int ac, char *av[]);
 
 /*
  *	init.c
  */
-void	init_input(t_input *input, int ac, char *av[]);
-void	init_philo(t_philo *philo, t_input *input);
-void    init_fork(t_philo *philo, t_input *input);
-long    get_time();
+void		init_input(t_input *input, int ac, char *av[]);
+void		init_philo(t_philo *philo, t_input *input);
+void		init_fork(t_philo *philo, t_input *input);
+long long	get_time(void);
 
 /*
  *	thread.c
  */
-int		create_thread(t_philo *philo,t_input *input);
-void    *play_philo(void *philo);
-void    eat(t_philo *philo);
-int     die_philo(t_philo *philo, int eat_cnt);
-void    sleep_think(t_philo *philo);
-int		join_thread(t_philo *philo);
+int			create_thread(t_philo *philo, t_input *input);
+void		*play_philo(void *philo);
+void		eat(t_philo *philo);
+int			die_philo(t_philo *philo);
+void		sleep_think(t_philo *philo);
+int			join_thread(t_philo *philo);
 
 #endif

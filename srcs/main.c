@@ -28,7 +28,7 @@ int	main(int ac, char *av[])
 		return (-1);
 	init_fork(philo, input);
 	init_philo(philo, input);
-	if(create_thread(philo, input) != 0)
+	if (create_thread(philo, input) != 0)
 		return (-1);
 	if (join_thread(philo) != 0)
 		return (-1);
