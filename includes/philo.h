@@ -42,6 +42,7 @@ typedef struct s_philo
 	pthread_mutex_t	eat_status;
 	pthread_t		p_thread;
 	int				p_idx;
+	long			start_tm;
 	long			born_tm;
 	long			last_meal_tm;
 	long			die_tm;

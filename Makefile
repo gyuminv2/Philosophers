@@ -12,8 +12,8 @@
 
 NAME = philo
 CC = cc
-CFLAG = -fsanitize=address -g3
-\CFLAG = -Wall -Wextra -Werror
+\CFLAG = -fsanitize=address -g3
+CFLAG = -Wall -Wextra -Werror
 INC = ./includes
 
 SRCS = $(addprefix ./srcs/, main.c init.c thread.c check_input.c)
