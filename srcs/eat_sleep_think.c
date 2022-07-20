@@ -16,10 +16,6 @@ void	eat(t_philo *philo)
 	printf("%lld phlio[%d] has taken a r_fork\n", \
 			get_time() - philo->born_tm, philo->p_idx);
 	pthread_mutex_lock(&philo->eat_status);
-	if (philo->input->die_state)
-	{
-		printf("3\n");
-	}
 	printf("%lld phlio[%d] is a eating\n", \
 			get_time() - philo->born_tm, philo->p_idx);
 	pthread_mutex_unlock(&philo->eat_status);
