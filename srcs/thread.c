@@ -48,19 +48,13 @@ void	*play_philo(void *philo)
 	while (!pho->input->die_state && eatting)
 	{
 		eat(pho);
-		if (die_philo(pho) && eatting == -1)
-		{
-			pho->input->die_state = 1;
+		if (die_philo(pho, eatting))
 			return (rtn);
-		}
 		if (pho->input->die_state)
 			break ;
 		sleep_think(pho);
-		if (die_philo(pho) && eatting == -1)
-		{
-			pho->input->die_state = 1;
+		if (die_philo(pho, eatting))
 			return (rtn);
-		}
 		if (eatting != -1)
 			eatting--;
 	}
@@ -68,11 +62,14 @@ void	*play_philo(void *philo)
 	return (ft_strdup(""));
 }
 
-int	die_philo(t_philo *philo)
+int	die_philo(t_philo *philo, int eatting)
 {
 	if ((get_time() - philo->last_meal_tm) <= philo->input->die_time)
 		return (0);
+	if (eatting != -1)
+		return (0);
 	philo->die_tm = get_time();
+	philo->input->die_state = 1;
 	return (1);
 }
 
@@ -84,30 +81,17 @@ int	join_thread(t_philo *philo)
 	i = 0;
 	while (i < philo->input->p_num)
 	{
-		if (pthread_join(philo[i].p_thread, &ret) != 0)
+		if (pthread_join(philo[i++].p_thread, &ret) != 0)
 		{
 			printf("pthread_join is FAIL\n");
 			return (-1);
 		}
 		if (ft_atoi((char *)ret) != 0)
 		{
-			pthread_mutex_lock(&philo[ft_atoi((char *)ret) - 1].eat_status);
-			printf("%ld phlio[%s] died\n", \
-					philo[ft_atoi((char *)ret) - 1].die_tm \
-					- philo->start_tm, (char *)ret);
-			i = 0;
-			while (i < philo->input->p_num)
-			{
-				pthread_mutex_destroy(&philo->n_fork[i]);
-				pthread_detach(philo[i].p_thread);
-				i++;
-			}
-			pthread_mutex_unlock(&philo[ft_atoi((char *)ret) - 1].eat_status);
-			pthread_mutex_destroy(&(philo->eat_status));
+			d_print_free(philo, ret);
 			free(ret);
 			return (0);
 		}
-		i++;
 	}
 	if (ft_atoi((char *)ret) == 0)
 	{
@@ -116,4 +100,23 @@ int	join_thread(t_philo *philo)
 		return (0);
 	}
 	return (0);
+}
+
+void	d_print_free(t_philo *philo, void *ret)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_lock(&philo[ft_atoi((char *)ret) - 1].eat_status);
+	printf("%ld phlio[%s] died\n", \
+			philo[ft_atoi((char *)ret) - 1].die_tm \
+			- philo->start_tm, (char *)ret);
+	while (i < philo->input->p_num)
+	{
+		pthread_mutex_destroy(&philo->n_fork[i]);
+		pthread_detach(philo[i].p_thread);
+		i++;
+	}
+	pthread_mutex_unlock(&philo[ft_atoi((char *)ret) - 1].eat_status);
+	pthread_mutex_destroy(&(philo->eat_status));
 }
