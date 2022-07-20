@@ -67,9 +67,13 @@ long long	get_time(void);
  */
 int			create_thread(t_philo *philo, t_input *input);
 void		*play_philo(void *philo);
-void		eat(t_philo *philo);
 int			die_philo(t_philo *philo);
-void		sleep_think(t_philo *philo);
 int			join_thread(t_philo *philo);
+
+/*
+ *	eat_sleep_think.c
+ */ 
+void		eat(t_philo *philo);
+void		sleep_think(t_philo *philo);
 
 #endif

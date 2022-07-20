@@ -16,7 +16,7 @@ CC = cc
 CFLAG = -Wall -Wextra -Werror
 INC = ./includes
 
-SRCS = $(addprefix ./srcs/, main.c init.c thread.c check_input.c)
+SRCS = $(addprefix ./srcs/, main.c init.c thread.c check_input.c eat_sleep_think.c)
 OBJS = $(SRCS:.c=.o)
 
 FTDIR = ./libft/
