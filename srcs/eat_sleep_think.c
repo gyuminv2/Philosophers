@@ -6,7 +6,7 @@
 /*   By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:22:12 by gyumpark          #+#    #+#             */
-/*   Updated: 2022/07/21 13:22:15 by gyumpark         ###   ########.fr       */
+/*   Updated: 2022/07/22 12:14:12 by gyumpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	eat(t_philo *philo)
 			get_time() - philo->born_tm, philo->p_idx);
 	philo->last_meal_tm = get_time();
 	pthread_mutex_unlock(&philo->eat_status);
-	// usleep(philo->input->eat_time * 1000);
 	ft_usleep(philo->input->eat_time);
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
@@ -50,9 +49,8 @@ void	sleep_think(t_philo *philo)
 {
 	printf("%lld phlio[%d] is sleeping\n", \
 			get_time() - philo->born_tm, philo->p_idx);
-	// usleep(philo->input->sleep_time * 1000);
 	ft_usleep(philo->input->sleep_time);
 	printf("%lld phlio[%d] is thinking\n", \
 			get_time() - philo->born_tm, philo->p_idx);
-	usleep(1000 * 10);
+	usleep(1000 * 11);
 }
