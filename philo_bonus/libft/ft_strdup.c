@@ -1,42 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input.c                                      :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/09 12:31:50 by gyumpark          #+#    #+#             */
-/*   Updated: 2022/07/09 12:31:51 by gyumpark         ###   ########.fr       */
+/*   Created: 2022/03/18 17:34:41 by gyumpark          #+#    #+#             */
+/*   Updated: 2022/03/18 17:34:41 by gyumpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "libft.h"
 
-int	check_input(int ac, char *av[])
+char	*ft_strdup(const char *s1)
 {
 	int		i;
-	int		over;
+	size_t	len;
+	char	*copy;
 
-	i = 1;
-	if (ac != 5 && ac != 6)
+	i = 0;
+	len = ft_strlen(s1);
+	copy = (char *)malloc(sizeof(char) * len + 1);
+	if (!copy)
+		return (NULL);
+	while (s1[i])
 	{
-		printf("Error: argv is must 4 or 5\n");
-		return (-1);
-	}
-	while (av[i])
-	{
-		over = ft_atoi(av[i]);
-		if (!ft_isnum(av[i]))
-		{
-			printf("Error: no digit\n");
-			return (-1);
-		}
-		if (over < INT_MIN || over > INT_MAX)
-		{
-			printf("Error: no int\n");
-			return (-1);
-		}
+		copy[i] = s1[i];
 		i++;
 	}
-	return (0);
+	copy[i] = '\0';
+	return (copy);
 }

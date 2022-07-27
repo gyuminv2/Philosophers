@@ -10,44 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdlib.h>
 # include <pthread.h>
 # include <signal.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <unistd.h>
+# include <semaphore.h>
 # include "libft.h"
 
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
+# define TRUE 1
+# define FALSE 0
 
-typedef struct s_input
+typedef struct s_philos
 {
-	int				p_num;
-	int				die_time;
-	int				eat_time;
-	int				sleep_time;
-	int				must_eat_cnt;
-	int				die_state;
-}	t_input;
-
-typedef struct s_philo
-{
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*n_fork;
-	pthread_mutex_t	eat_status;
-	pthread_t		p_thread;
 	int				p_idx;
-	long			start_tm;
-	long			born_tm;
-	long			last_meal_tm;
-	long			die_tm;
-	t_input			*input;
-}	t_philo;
+	int				total_eat;
+	char			*name;
+	pid_t			pid;
+	sem_t			*status;
+	struct s_root	*root;
+	struct timeval	last_meal_tm;
+}	t_philos;
+
+typedef struct s_root
+{
+	int				philo_num;
+	int				die_tm;
+	int				eat_tm;
+	int				sleep_tm;
+	int				must_eat_cnt;
+	sem_t			*play;
+	sem_t			*stop;
+	sem_t			*clear_philo;
+	sem_t			*n_fork;
+	struct timeval	start_tm;
+	t_philos		*philos;
+}	t_root;
 
 /*
  *	main.c
@@ -57,24 +62,24 @@ int			check_input(int ac, char *av[]);
 /*
  *	init.c
  */
-void		init_input(t_input *input, int ac, char *av[]);
-void		init_philo(t_philo *philo, t_input *input);
-void		init_fork(t_philo *philo, t_input *input);
-long long	get_time(void);
+int			init(t_root *root, char **av);
 
 /*
- *	thread.c
+ *	philo.c
  */
-int			create_thread(t_philo *philo, t_input *input);
-void		*play_philo(void *philo);
-int			die_philo(t_philo *philo, int eatting);
-int			join_thread(t_philo *philo);
-void		d_print_free(t_philo *philo, void *ret);
+void		*play_philo(t_philos *philo);
 
 /*
- *	eat_sleep_think.c
+ *	monitor.c
  */
-void		eat(t_philo *philo);
-void		sleep_think(t_philo *philo);
+void    	*monitorring_thread(void *root);
+void		*monitorring_eat(void *root);
+void		*monitorring_die(void *philo);
+
+/*
+ *	util.c
+ */
+long long   get_time(struct timeval cur);
+void 		print_msg(t_philos *philo, char *msg);
 
 #endif

@@ -13,10 +13,11 @@
 NAME = philo
 CC = cc
 \CFLAG = -fsanitize=address -g3
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -fsanitize=thread -g3
+\CFLAG = -Wall -Wextra -Werror
 INC = ./includes
 
-SRCS = $(addprefix ./srcs/, main.c init.c thread.c check_input.c eat_sleep_think.c)
+SRCS = $(addprefix ./srcs/, main.c check_input.c init.c thread.c philo.c monitor.c util.c)
 OBJS = $(SRCS:.c=.o)
 
 FTDIR = ./libft/
@@ -28,7 +29,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	make all -C $(FTDIR)
+	make -j 4 all -C $(FTDIR)
 	cp $(FTDIR)$(FT) ./$(FT)
 	$(CC) $(CFLAG) -I$(INC) -I$(FTINC) -o $@ $^ libft.a
 
