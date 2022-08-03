@@ -13,7 +13,7 @@
 NAME = philo_bonus
 CC = cc
 \CFLAG = -fsanitize=address -g3
-\CFLAG = -fsanitize=thread
+\CFLAG = -fsanitize=thread -g3
 CFLAG = -Wall -Wextra -Werror
 INC = ./includes
 

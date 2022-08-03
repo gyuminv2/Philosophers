@@ -67,7 +67,7 @@ int			init(t_root *root, char **av);
  *	thread.c
  */
 void		thread_create(t_root *root);
-void	    thread_join(t_root *root);
+void		thread_join(t_root *root);
 
 /*
  *	philo.c

@@ -1,34 +1,35 @@
 #include "philo.h"
 
-void all_free(t_root *root)
+void	all_free(t_root *root)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while(i < root->philo_num)
-    {
-        pthread_mutex_destroy(&root->n_fork[i]);
-        i++;
-    }
-    free(root->philos);
-    free(root->n_fork);
+	i = 0;
+	while (i < root->philo_num)
+	{
+		pthread_mutex_destroy(&root->n_fork[i]);
+		i++;
+	}
+	free(root->philos);
+	free(root->n_fork);
 }
 
-long long   get_time(struct timeval cur)
+long long	get_time(struct timeval cur)
 {
-    long long   ms;
+	long long	ms;
 
-    ms = (cur.tv_sec * 1000) + (cur.tv_usec / 1000);
-    return (ms);
+	ms = (cur.tv_sec * 1000) + (cur.tv_usec / 1000);
+	return (ms);
 }
 
-void print_msg(t_philos *philo, char *msg)
+void	print_msg(t_philos *philo, char *msg)
 {
-    struct timeval cur;
-    
-    pthread_mutex_lock(&philo->root->stop_mutex);
-    gettimeofday(&cur, NULL);
-    if (!philo->root->stop_state)
-        printf("%lld %d %s\n", get_time(cur) - get_time(philo->root->start_tm), philo->p_idx, msg);
-    pthread_mutex_unlock(&philo->root->stop_mutex);
+	struct timeval	cur;
+
+	pthread_mutex_lock(&philo->root->stop_mutex);
+	gettimeofday(&cur, NULL);
+	if (!philo->root->stop_state)
+		printf("%lld %d %s\n", get_time(cur) - \
+			get_time(philo->root->start_tm), philo->p_idx, msg);
+	pthread_mutex_unlock(&philo->root->stop_mutex);
 }

@@ -1,6 +1,6 @@
 #include "philo_bonus.h"
 
-void    *monitorring_thread(void *root)
+void	*monitorring_thread(void *root)
 {
 	t_root	*rt;
 	int		i;
@@ -39,7 +39,8 @@ void	*monitorring_die(void *philo)
 		gettimeofday(&cur, NULL);
 		if (get_time(cur) - get_time(pho->last_meal_tm) >= pho->root->die_tm)
 		{
-			printf("%lld %d %s\n", get_time(cur) - get_time(pho->root->start_tm), pho->p_idx, "is died");
+			printf("%lld %d %s\n", get_time(cur) - \
+				get_time(pho->root->start_tm), pho->p_idx, "is died");
 			sem_post(pho->root->stop);
 			return (NULL);
 		}

@@ -1,9 +1,8 @@
 {
     "files.associations": {
         "philo.h": "c",
-        "__locale": "c",
-        "bitset": "c",
-        "_pthread_types.h": "c",
-        "locale": "c"
+        "locale": "c",
+        "ios": "c",
+        "philo_bonus.h": "c"
     }
 }

@@ -67,19 +67,19 @@ int			init(t_root *root, char **av);
 /*
  *	philo.c
  */
-void		*play_philo(t_philos *philo);
+void		play_philo(t_philos *philo);
 
 /*
  *	monitor.c
  */
-void    	*monitorring_thread(void *root);
+void		*monitorring_thread(void *root);
 void		*monitorring_eat(void *root);
 void		*monitorring_die(void *philo);
 
 /*
  *	util.c
  */
-long long   get_time(struct timeval cur);
-void 		print_msg(t_philos *philo, char *msg);
+long long	get_time(struct timeval cur);
+void		print_msg(t_philos *philo, char *msg);
 
 #endif

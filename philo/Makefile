@@ -12,9 +12,9 @@
 
 NAME = philo
 CC = cc
-\CFLAG = -fsanitize=address -g3
 CFLAG = -fsanitize=thread -g3
-\CFLAG = -Wall -Wextra -Werror
+\CFLAGS = -fsanitize=address -g3
+\CFLAGS = -Wall -Wextra -Werror
 INC = ./includes
 
 SRCS = $(addprefix ./srcs/, main.c check_input.c init.c thread.c philo.c monitor.c util.c)
@@ -31,10 +31,10 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	make -j 4 all -C $(FTDIR)
 	cp $(FTDIR)$(FT) ./$(FT)
-	$(CC) $(CFLAG) -I$(INC) -I$(FTINC) -o $@ $^ libft.a
+	$(CC) $(CFLAGS) -I$(INC) -I$(FTINC) -o $@ $^ libft.a
 
 %.o : %.c
-	$(CC) $(CFLAG) -I$(INC) -I$(FTINC) -c $^ -o $@
+	$(CC) $(CFLAGS) -I$(INC) -I$(FTINC) -c $^ -o $@
 
 clean:
 	make fclean -C $(FTDIR)
