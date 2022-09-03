@@ -21,7 +21,11 @@ void	eat(t_philos *philo)
 		get_time(philo->root->start_tm), philo->p_idx, "is eating");
 	philo->total_eat++;
 	if (philo->total_eat == philo->root->must_eat_cnt)
+	{
+		// pthread_mutex_lock(&philo->root->stop_mutex);
 		philo->root->philo_clear++;
+		pthread_mutex_unlock(&philo->root->stop_mutex);
+	}
 	pthread_mutex_unlock(&philo->root->stop_mutex);
 	usleep(philo->root->eat_tm * 1000);
 	pthread_mutex_unlock(&philo->root->mutex_status);
