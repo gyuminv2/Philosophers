@@ -8,7 +8,8 @@ void	thread_join(t_root *root)
 	while (i < root->philo_num)
 	{
 		pthread_join(root->philos[i].p_thread, NULL);
-		pthread_mutex_destroy(&root->philos[i].mutex_status);
+		pthread_mutex_destroy(&root->mutex_status);
+		pthread_mutex_destroy(&root->stop_mutex);
 		i++;
 	}
 	all_free(root);

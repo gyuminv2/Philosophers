@@ -12,8 +12,8 @@
 
 NAME = philo
 CC = cc
-CFLAG = -fsanitize=thread -g3
 \CFLAGS = -fsanitize=address -g3
+CFLAGS = -fsanitize=thread -g3
 \CFLAGS = -Wall -Wextra -Werror
 INC = ./includes
 

@@ -32,7 +32,7 @@ typedef struct s_philos
 	int				total_eat;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	mutex_status;
+	// pthread_mutex_t	mutex_status;
 	pthread_t		p_thread;
 	struct s_root	*root;
 	struct timeval	last_meal_tm;
@@ -47,6 +47,7 @@ typedef struct s_root
 	int				must_eat_cnt;
 	int				stop_state;
 	int				philo_clear;
+	pthread_mutex_t mutex_status;
 	pthread_mutex_t	stop_mutex;
 	pthread_mutex_t	*n_fork;
 	struct timeval	start_tm;

@@ -36,11 +36,12 @@ int	init_philos(t_root *root)
 
 	i = 0;
 	pthread_mutex_init(&root->stop_mutex, NULL);
+	pthread_mutex_init(&root->mutex_status, NULL);
 	while (i < root->philo_num)
 	{
 		root->philos[i].p_idx = i + 1;
 		pthread_mutex_init(&root->n_fork[i], NULL);
-		pthread_mutex_init(&root->philos[i].mutex_status, NULL);
+		// pthread_mutex_init(&root->philos[i].mutex_status, NULL);
 		if (i == 0)
 			root->philos[i].l_fork = &root->n_fork[root->philo_num - 1];
 		else
