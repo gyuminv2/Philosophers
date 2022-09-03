@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "philo.h": "c",
-        "locale": "c",
-        "ios": "c",
-        "philo_bonus.h": "c"
-    }
-}

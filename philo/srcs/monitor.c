@@ -27,22 +27,17 @@ void	*monitorring_thread(void *philo)
 	{
 		while (1)
 		{
-			// pthread_mutex_lock(&pho->root->mutex_status);
-			// pthread_mutex_unlock(&pho->root->mutex_status);
+			pthread_mutex_lock(&pho->root->stop_mutex);
 			if (pho->root->philo_num == pho->root->philo_clear)
 			{
-				// pthread_mutex_unlock(&pho->root->mutex_status);
-				pthread_mutex_lock(&pho->root->stop_mutex);
 				pho->root->stop_state = 1;
 				pthread_mutex_unlock(&pho->root->stop_mutex);
-				// pthread_mutex_unlock(&pho->root->mutex_status);
-				break;
+				break ;
 			}
+			pthread_mutex_unlock(&pho->root->stop_mutex);
 		}
-		pthread_mutex_unlock(&pho->root->stop_mutex);
-		// pthread_mutex_unlock(&pho->root->mutex_status);
 	}
-	while(1)
+	while (1)
 	{
 		die_check(pho);
 		pthread_mutex_unlock(&pho->root->mutex_status);
@@ -50,7 +45,7 @@ void	*monitorring_thread(void *philo)
 		if (pho->root->stop_state == 1)
 		{
 			pthread_mutex_unlock(&pho->root->stop_mutex);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&pho->root->stop_mutex);
 	}

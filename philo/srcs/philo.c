@@ -7,22 +7,21 @@ void	eat(t_philos *philo)
 	pthread_mutex_lock(philo->l_fork);
 	print_msg(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->root->mutex_status);
-	gettimeofday(&philo->last_meal_tm, NULL);
 	pthread_mutex_lock(&philo->root->stop_mutex);
 	if (philo->root->stop_state == 1)
-		{
-			pthread_mutex_unlock(philo->l_fork);
-			pthread_mutex_unlock(philo->r_fork);
-			pthread_mutex_unlock(&philo->root->stop_mutex);
-			pthread_mutex_unlock(&philo->root->mutex_status);
-			return ;
-		}		
+	{
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(&philo->root->stop_mutex);
+		pthread_mutex_unlock(&philo->root->mutex_status);
+		return ;
+	}
+	gettimeofday(&philo->last_meal_tm, NULL);
 	printf("%lld %d %s\n", get_time(philo->last_meal_tm) - \
-		get_time(philo->root->start_tm), philo->p_idx, "is eating");
+			get_time(philo->root->start_tm), philo->p_idx, "is eating");
 	philo->total_eat++;
 	if (philo->total_eat == philo->root->must_eat_cnt)
 	{
-		// pthread_mutex_lock(&philo->root->stop_mutex);
 		philo->root->philo_clear++;
 		pthread_mutex_unlock(&philo->root->stop_mutex);
 	}
@@ -55,7 +54,7 @@ void	*play_philo(void *philo)
 		if (pho->root->stop_state == 1)
 		{
 			pthread_mutex_unlock(&pho->root->stop_mutex);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&pho->root->stop_mutex);
 	}

@@ -27,9 +27,11 @@ void	print_msg(t_philos *philo, char *msg)
 	struct timeval	cur;
 
 	pthread_mutex_lock(&philo->root->stop_mutex);
-	gettimeofday(&cur, NULL);
-	if (!philo->root->stop_state)
+	if (philo->root->stop_state == 0)
+	{
+		gettimeofday(&cur, NULL);
 		printf("%lld %d %s\n", get_time(cur) - \
-			get_time(philo->root->start_tm), philo->p_idx, msg);
+				get_time(philo->root->start_tm), philo->p_idx, msg);
+	}
 	pthread_mutex_unlock(&philo->root->stop_mutex);
 }

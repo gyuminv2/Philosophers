@@ -13,8 +13,8 @@
 NAME = philo_bonus
 CC = cc
 \CFLAG = -fsanitize=address -g3
-\CFLAG = -fsanitize=thread -g3
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -fsanitize=thread -g3
+\CFLAG = -Wall -Wextra -Werror
 INC = ./includes
 
 SRCS = $(addprefix ./srcs/, main.c init.c check_input.c philo.c monitor.c util.c)

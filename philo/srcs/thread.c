@@ -26,9 +26,9 @@ void	thread_create(t_root *root)
 	{
 		root->philos[i].last_meal_tm = root->start_tm;
 		pthread_create(&root->philos[i].p_thread, NULL, \
-			play_philo, (void *)&root->philos[i]);
+				play_philo, (void *)&root->philos[i]);
 		pthread_create(&m_thread, NULL, monitorring_thread, \
-			(void *)&root->philos[i]);
+				(void *)&root->philos[i]);
 		pthread_detach(m_thread);
 		i++;
 	}

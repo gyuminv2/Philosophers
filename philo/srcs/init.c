@@ -24,7 +24,7 @@ int	init_mem(t_root *root)
 {
 	root->philos = (t_philos *)malloc(sizeof(t_philos) * root->philo_num);
 	root->n_fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
-					* root->philo_num);
+			* root->philo_num);
 	if (!root->philos || !root->n_fork)
 		return (FALSE);
 	return (TRUE);
@@ -41,7 +41,6 @@ int	init_philos(t_root *root)
 	{
 		root->philos[i].p_idx = i + 1;
 		pthread_mutex_init(&root->n_fork[i], NULL);
-		// pthread_mutex_init(&root->philos[i].mutex_status, NULL);
 		if (i == 0)
 			root->philos[i].l_fork = &root->n_fork[root->philo_num - 1];
 		else
