@@ -19,6 +19,7 @@ void	thread_create(t_root *root)
 {
 	int			i;
 	pthread_t	m_thread;
+	pthread_t	e_thread;
 
 	gettimeofday(&root->start_tm, NULL);
 	i = 0;
@@ -29,7 +30,13 @@ void	thread_create(t_root *root)
 				play_philo, (void *)&root->philos[i]);
 		pthread_create(&m_thread, NULL, monitorring_thread, \
 				(void *)&root->philos[i]);
+		// if (root->must_eat_cnt != 0)
+		// {
+		// 	pthread_create(&e_thread, NULL, monitorring_eating, \
+		// 			(void *)&root->philos[i]);
+		// }
 		pthread_detach(m_thread);
+		pthread_detach(e_thread);
 		i++;
 	}
 }

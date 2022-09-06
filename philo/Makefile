@@ -13,8 +13,8 @@
 NAME = philo
 CC = cc
 \CFLAGS = -fsanitize=address -g3
-\CFLAGS = -fsanitize=thread -g3
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -fsanitize=thread -g3
+\CFLAGS = -Wall -Wextra -Werror
 INC = ./includes
 
 SRCS = $(addprefix ./srcs/, main.c check_input.c init.c thread.c philo.c monitor.c util.c)
