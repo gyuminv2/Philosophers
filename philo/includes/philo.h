@@ -29,6 +29,8 @@
 # define FAIL 0
 # define GO 1
 # define STOP 0
+# define NUM_1 1
+# define NUM_0 0
 
 typedef struct s_philos
 {
@@ -52,6 +54,7 @@ typedef struct s_root
 	int				philo_clear;
 	pthread_mutex_t	mutex_status;
 	pthread_mutex_t	stop_mutex;
+	pthread_mutex_t must_eat_mutex;
 	pthread_mutex_t	*n_fork;
 	struct timeval	start_tm;
 	t_philos		*philos;
@@ -77,7 +80,7 @@ void		thread_join(t_root *root);
  *	philo.c
  */
 void		*play_philo(void *philo);
-int			stop(t_philos *philo);
+int			stop(t_philos *philo, int flag);
 
 /**
  *	monitor.c

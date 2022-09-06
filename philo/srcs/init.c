@@ -15,7 +15,10 @@ void	init_input(t_root *root, char **av)
 	}
 	root->sleep_tm = ft_atoi(av[4]);
 	if (av[5])
+	{
 		root->must_eat_cnt = ft_atoi(av[5]);
+		pthread_mutex_init(&root->must_eat_mutex, NULL);
+	}
 	else
 		root->must_eat_cnt = 0;
 }
