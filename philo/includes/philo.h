@@ -54,7 +54,6 @@ typedef struct s_root
 	int				philo_clear;
 	pthread_mutex_t	mutex_status;
 	pthread_mutex_t	stop_mutex;
-	pthread_mutex_t must_eat_mutex;
 	pthread_mutex_t	*n_fork;
 	struct timeval	start_tm;
 	t_philos		*philos;

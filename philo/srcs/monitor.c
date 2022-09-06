@@ -22,14 +22,14 @@ void	monitorring_eat(t_philos *philo)
 {
 	while (1)
 	{
-		// pthread_mutex_lock(&philo->root->stop_mutex);
+		pthread_mutex_lock(&philo->root->stop_mutex);
 		if (philo->root->philo_num == philo->root->philo_clear)
 		{
 			philo->root->stop_state = 1;
-			// pthread_mutex_unlock(&philo->root->stop_mutex);
+			pthread_mutex_unlock(&philo->root->stop_mutex);
 			break ;
 		}
-		// pthread_mutex_unlock(&philo->root->stop_mutex);
+		pthread_mutex_unlock(&philo->root->stop_mutex);
 	}
 }
 
@@ -37,7 +37,6 @@ void	monitorring_die(t_philos *philo)
 {
 	while (1)
 	{
-		die_check(philo);
 		pthread_mutex_lock(&philo->root->stop_mutex);
 		if (philo->root->stop_state == 1)
 		{
@@ -45,6 +44,10 @@ void	monitorring_die(t_philos *philo)
 			break ;
 		}
 		pthread_mutex_unlock(&philo->root->stop_mutex);
+		if (philo->root->must_eat_cnt == 0)
+			die_check(philo);
+		else
+			monitorring_eat(philo);
 	}
 }
 

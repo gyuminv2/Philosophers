@@ -12,7 +12,6 @@ int	stop(t_philos *philo, int flag)
 	}
 	if (flag == NUM_1)
 	{
-		pthread_mutex_unlock(&philo->root->must_eat_mutex);
 		pthread_mutex_unlock(&philo->root->stop_mutex);
 		pthread_mutex_unlock(&philo->root->mutex_status);
 		pthread_mutex_unlock(philo->l_fork);
@@ -52,14 +51,9 @@ int	eat(t_philos *philo)
 	philo->total_eat++;
 	if (philo->total_eat == philo->root->must_eat_cnt)
 	{
-		pthread_mutex_lock(&philo->root->must_eat_mutex);
 		philo->root->philo_clear++;
 		if (stop(philo, NUM_1) == STOP)
 			return (STOP);
-		// pthread_mutex_unlock(&philo->root->stop_mutex);
-		// pthread_mutex_unlock(&philo->root->mutex_status);
-		// pthread_mutex_unlock(philo->l_fork);
-		// pthread_mutex_unlock(philo->r_fork);
 	}
 	pthread_mutex_unlock(&philo->root->stop_mutex);
 	pthread_mutex_unlock(&philo->root->mutex_status);
@@ -85,7 +79,7 @@ void	*play_philo(void *philo)
 		ft_usleep(pho->root->eat_tm);
 	while (1)
 	{
-		if (eat(pho) == FAIL)
+		if (eat(pho) == STOP)
 			break;
 		sleep_think(pho);
 		// pthread_mutex_lock(&pho->root->stop_mutex);

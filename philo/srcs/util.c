@@ -2,14 +2,14 @@
 
 void	all_free(t_root *root)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
-	while (i < root->philo_num)
-	{
-		pthread_mutex_destroy(&root->n_fork[i]);
-		i++;
-	}
+	// i = 0;
+	// while (i < root->philo_num)
+	// {
+	// 	pthread_mutex_destroy(&root->n_fork[i]);
+	// 	i++;
+	// }
 	free(root->philos);
 	free(root->n_fork);
 }
