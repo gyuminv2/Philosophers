@@ -7,8 +7,8 @@ void	thread_join(t_root *root)
 	i = 0;
 	while (i < root->philo_num)
 	{
-		pthread_detach(root->philos[i].p_thread);
-		// pthread_join(root->philos[i].p_thread, NULL);
+		// pthread_detach(root->philos[i].p_thread);
+		pthread_join(root->philos[i].p_thread, NULL);
 		i++;
 	}
 	all_free(root);

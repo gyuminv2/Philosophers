@@ -52,7 +52,7 @@ typedef struct s_root
 	int				must_eat_cnt;
 	int				stop_state;
 	int				philo_clear;
-	pthread_mutex_t	mutex_status;
+	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	stop_mutex;
 	pthread_mutex_t	*n_fork;
 	struct timeval	start_tm;

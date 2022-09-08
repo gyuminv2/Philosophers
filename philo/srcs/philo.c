@@ -5,7 +5,7 @@ int	stop(t_philos *philo, int flag)
 	if (philo->root->stop_state == 1)
 	{
 		pthread_mutex_unlock(&philo->root->stop_mutex);
-		pthread_mutex_unlock(&philo->root->mutex_status);
+		// pthread_mutex_unlock(&philo->root->write_mutex);
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		return (STOP);
@@ -13,7 +13,7 @@ int	stop(t_philos *philo, int flag)
 	if (flag == NUM_1)
 	{
 		pthread_mutex_unlock(&philo->root->stop_mutex);
-		pthread_mutex_unlock(&philo->root->mutex_status);
+		// pthread_mutex_unlock(&philo->root->write_mutex);
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		return (STOP);
@@ -31,7 +31,7 @@ void	ft_usleep(int t)
 	while (get_time(cur) < start + t)
 	{
 		gettimeofday(&cur, NULL);
-		usleep(200);
+		usleep(300);
 	}
 }
 
@@ -41,13 +41,14 @@ int	eat(t_philos *philo)
 	print_msg(philo, "has taken a fork");
 	pthread_mutex_lock(philo->l_fork);
 	print_msg(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->root->mutex_status);
-	gettimeofday(&philo->last_meal_tm, NULL);
 	pthread_mutex_lock(&philo->root->stop_mutex);
 	if (stop(philo, NUM_0) == STOP)
 		return (STOP);
+	// pthread_mutex_lock(&philo->root->write_mutex);
+	gettimeofday(&philo->last_meal_tm, NULL);
 	printf("%lld %d %s\n", get_time(philo->last_meal_tm) - \
 			get_time(philo->root->start_tm), philo->p_idx, "is eating");
+	// pthread_mutex_unlock(&philo->root->write_mutex);
 	philo->total_eat++;
 	if (philo->total_eat == philo->root->must_eat_cnt)
 	{
@@ -56,7 +57,6 @@ int	eat(t_philos *philo)
 			return (STOP);
 	}
 	pthread_mutex_unlock(&philo->root->stop_mutex);
-	pthread_mutex_unlock(&philo->root->mutex_status);
 	ft_usleep(philo->root->eat_tm);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
@@ -75,6 +75,7 @@ void	*play_philo(void *philo)
 	t_philos	*pho;
 
 	pho = (t_philos *)philo;
+
 	if (pho->p_idx % 2 != 0)
 		ft_usleep(pho->root->eat_tm);
 	while (1)
@@ -82,13 +83,6 @@ void	*play_philo(void *philo)
 		if (eat(pho) == STOP)
 			break;
 		sleep_think(pho);
-		// pthread_mutex_lock(&pho->root->stop_mutex);
-		// if (pho->root->stop_state == 1)
-		// {
-		// 	pthread_mutex_unlock(&pho->root->stop_mutex);
-		// 	break ;
-		// }
-		// pthread_mutex_unlock(&pho->root->stop_mutex);
 	}
 	return (NULL);
 }

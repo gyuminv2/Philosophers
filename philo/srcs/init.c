@@ -36,7 +36,7 @@ int	init_philos(t_root *root)
 
 	i = 0;
 	pthread_mutex_init(&root->stop_mutex, NULL);
-	pthread_mutex_init(&root->mutex_status, NULL);
+	pthread_mutex_init(&root->write_mutex, NULL);
 	while (i < root->philo_num)
 	{
 		root->philos[i].p_idx = i + 1;
