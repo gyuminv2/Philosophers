@@ -6,15 +6,15 @@
 #    By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 21:19:45 by gyumpark          #+#    #+#              #
-#    Updated: 2022/09/08 21:33:46 by gyumpark         ###   ########.fr        #
+#    Updated: 2022/09/09 15:52:11 by gyumpark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
 \CFLAGS = -fsanitize=address -g3
-CFLAGS = -fsanitize=thread -g3
-\CFLAGS = -Wall -Wextra -Werror
+\CFLAGS = -fsanitize=thread -g3
+CFLAGS = -Wall -Wextra -Werror
 INC = ./includes
 
 SRCS = $(addprefix ./srcs/, main.c check_input.c init.c thread.c philo.c monitor.c util.c)

@@ -28,10 +28,10 @@ void	print_msg(t_philos *philo, char *msg)
 
 	pthread_mutex_lock(&philo->root->write_mutex);
 	gettimeofday(&cur, NULL);
-	// if (philo->root->stop_state == 0)
-	// {
+	if (philo->root->stop_state == 0)
+	{
 		printf("%lld %d %s\n", get_time(cur) - \
 				get_time(philo->root->start_tm), philo->p_idx, msg);
-	// }
+	}
 	pthread_mutex_unlock(&philo->root->write_mutex);
 }

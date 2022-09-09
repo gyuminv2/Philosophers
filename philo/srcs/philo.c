@@ -5,7 +5,7 @@ int	stop(t_philos *philo, int flag)
 	if (philo->root->stop_state == 1)
 	{
 		pthread_mutex_unlock(&philo->root->stop_mutex);
-		// pthread_mutex_unlock(&philo->root->write_mutex);
+		pthread_mutex_unlock(&philo->root->write_mutex);
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		return (STOP);
@@ -31,23 +31,22 @@ void	ft_usleep(int t)
 	while (get_time(cur) < start + t)
 	{
 		gettimeofday(&cur, NULL);
-		usleep(300);
+		usleep(200);
 	}
 }
 
 int	eat(t_philos *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
-	print_msg(philo, "has taken a fork");
+	print_msg(philo, "has taken a r_fork");
 	pthread_mutex_lock(philo->l_fork);
-	print_msg(philo, "has taken a fork");
+	print_msg(philo, "has taken a l_fork");
 	pthread_mutex_lock(&philo->root->stop_mutex);
 	if (stop(philo, NUM_0) == STOP)
 		return (STOP);
 	// pthread_mutex_lock(&philo->root->write_mutex);
 	gettimeofday(&philo->last_meal_tm, NULL);
-	printf("%lld %d %s\n", get_time(philo->last_meal_tm) - \
-			get_time(philo->root->start_tm), philo->p_idx, "is eating");
+	print_msg(philo, "is eating");
 	// pthread_mutex_unlock(&philo->root->write_mutex);
 	philo->total_eat++;
 	if (philo->total_eat == philo->root->must_eat_cnt)
@@ -81,8 +80,11 @@ void	*play_philo(void *philo)
 	while (1)
 	{
 		if (eat(pho) == STOP)
+		{
 			break;
-		sleep_think(pho);
+		}
+		else
+			sleep_think(pho);
 	}
 	return (NULL);
 }
