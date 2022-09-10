@@ -10,55 +10,45 @@ int	die_check(t_philos *philo)
 			philo->root->die_tm)
 	{
 		philo->root->stop_state = 1;
-		pthread_mutex_lock(&philo->root->write_mutex);
 		pthread_mutex_unlock(&philo->root->stop_mutex);
-		printf("%lld %d %s\n", get_time(cur) - \
-				get_time(philo->root->start_tm), philo->p_idx, "is died");
-		pthread_mutex_unlock(&philo->root->write_mutex);
-		return (0);
+		print_msg(philo, "is died");
+		return (STOP);
 	}
 	if (philo->root->philo_num == philo->root->philo_clear)
 		{
 			philo->root->stop_state = 1;
 			pthread_mutex_unlock(&philo->root->stop_mutex);
-			return (0);
+			return (STOP);
 		}
 	pthread_mutex_unlock(&philo->root->stop_mutex);
-	return (1);
+	return (GO);
 }
 
 int	monitorring_die(t_philos *philo)
 {
-	while (1)
+	if (is_stop(philo) == STOP)
 	{
-		pthread_mutex_lock(&philo->root->stop_mutex);
-		if (philo->root->stop_state == 1)
-		{
-			break ;
-		}
-		pthread_mutex_unlock(&philo->root->stop_mutex);
-		if (die_check(philo) == 0)
-			break ;
+		return (STOP);
 	}
-	return (0);
+	usleep(200);
+	if (die_check(philo) == STOP)
+	{
+		return (STOP);
+	}
+	return (GO);
 }
 
 void	*monitorring_thread(void *philo)
 {
 	t_philos		*pho;
 
-	pho = (void *)philo;
-	if (monitorring_die(pho) == STOP)
+	pho = (t_philos *)philo;
+	while (1)
 	{
-		// pthread_mutex_unlock(&pho->root->write_mutex);
-		pthread_mutex_unlock(&pho->root->stop_mutex);
-		return (NULL);
+		if (monitorring_die(pho) == STOP)
+		{
+			break;
+		}
 	}
-		// exit(1);
-	/**	프로세스종료
-		=thread die 이후에 출력
-		=error 정상출력
-	*/
-
 	return (NULL);
 }

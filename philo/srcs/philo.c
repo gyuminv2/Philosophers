@@ -1,26 +1,5 @@
 #include "philo.h"
 
-int	stop(t_philos *philo, int flag)
-{
-	if (philo->root->stop_state == 1)
-	{
-		pthread_mutex_unlock(&philo->root->stop_mutex);
-		pthread_mutex_unlock(&philo->root->write_mutex);
-		pthread_mutex_unlock(philo->l_fork);
-		pthread_mutex_unlock(philo->r_fork);
-		return (STOP);
-	}
-	if (flag == NUM_1)
-	{
-		pthread_mutex_unlock(&philo->root->stop_mutex);
-		// pthread_mutex_unlock(&philo->root->write_mutex);
-		pthread_mutex_unlock(philo->l_fork);
-		pthread_mutex_unlock(philo->r_fork);
-		return (STOP);
-	}
-	return (GO);
-}
-
 void	ft_usleep(int t)
 {
 	struct timeval	cur;
@@ -38,16 +17,18 @@ void	ft_usleep(int t)
 int	eat(t_philos *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
+	if (is_stop(philo) == STOP)
+		return (STOP);
 	print_msg(philo, "has taken a r_fork");
 	pthread_mutex_lock(philo->l_fork);
-	print_msg(philo, "has taken a l_fork");
-	pthread_mutex_lock(&philo->root->stop_mutex);
-	if (stop(philo, NUM_0) == STOP)
+	if (is_stop(philo) == STOP)
 		return (STOP);
-	// pthread_mutex_lock(&philo->root->write_mutex);
+	print_msg(philo, "has taken a l_fork");
 	gettimeofday(&philo->last_meal_tm, NULL);
 	print_msg(philo, "is eating");
-	// pthread_mutex_unlock(&philo->root->write_mutex);
+	if (stop(philo, NUM_0) == STOP)
+		return (STOP);
+	pthread_mutex_lock(&philo->root->stop_mutex);
 	philo->total_eat++;
 	if (philo->total_eat == philo->root->must_eat_cnt)
 	{
@@ -59,14 +40,17 @@ int	eat(t_philos *philo)
 	ft_usleep(philo->root->eat_tm);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
-	return (SUCCESS);
+	return (GO);
 }
 
-void	sleep_think(t_philos *philo)
+int	sleep_think(t_philos *philo)
 {
+	if (is_stop(philo) == STOP)
+		return (STOP);
 	print_msg(philo, "is sleeping");
 	print_msg(philo, "is thinking");
 	ft_usleep(philo->root->sleep_tm);
+	return (GO);
 }
 
 void	*play_philo(void *philo)
@@ -83,8 +67,14 @@ void	*play_philo(void *philo)
 		{
 			break;
 		}
-		else
-			sleep_think(pho);
+		else if (sleep_think(pho) == STOP)
+		{
+			break;
+		}
+		if (is_stop(pho) == STOP)
+		{
+			break;
+		}
 	}
 	return (NULL);
 }

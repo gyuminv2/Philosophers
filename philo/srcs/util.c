@@ -2,14 +2,6 @@
 
 void	all_free(t_root *root)
 {
-	// int	i;
-
-	// i = 0;
-	// while (i < root->philo_num)
-	// {
-	// 	pthread_mutex_destroy(&root->n_fork[i]);
-	// 	i++;
-	// }
 	free(root->philos);
 	free(root->n_fork);
 }
@@ -28,10 +20,48 @@ void	print_msg(t_philos *philo, char *msg)
 
 	pthread_mutex_lock(&philo->root->write_mutex);
 	gettimeofday(&cur, NULL);
-	if (philo->root->stop_state == 0)
+	if (is_stop(philo) == GO)
+	{
+		printf("%lld %d %s\n", get_time(cur) - \
+				get_time(philo->root->start_tm), philo->p_idx, msg);
+		pthread_mutex_unlock(&philo->root->write_mutex);
+	}
+	else
 	{
 		printf("%lld %d %s\n", get_time(cur) - \
 				get_time(philo->root->start_tm), philo->p_idx, msg);
 	}
-	pthread_mutex_unlock(&philo->root->write_mutex);
+}
+
+int	is_stop(t_philos *philo)
+{
+	pthread_mutex_lock(&philo->root->stop_mutex);
+	if (philo->root->stop_state == 1)
+	{
+		pthread_mutex_unlock(&philo->root->stop_mutex);
+		return (STOP);
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->root->stop_mutex);
+		return (GO);
+	}
+}
+
+int	stop(t_philos *philo, int flag)
+{
+	if (flag == NUM_1)
+	{
+		pthread_mutex_unlock(&philo->root->stop_mutex);
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+		return (STOP);
+	}
+	if (is_stop(philo) == STOP)
+	{
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+		return (STOP);
+	}
+	return (GO);
 }
