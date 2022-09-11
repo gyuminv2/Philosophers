@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/11 17:17:08 by gyumpark          #+#    #+#             */
+/*   Updated: 2022/09/11 17:18:43 by gyumpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	ft_usleep(int t)
@@ -10,7 +22,7 @@ void	ft_usleep(int t)
 	while (get_time(cur) < start + t)
 	{
 		gettimeofday(&cur, NULL);
-		usleep(200);
+		usleep(300);
 	}
 }
 
@@ -19,11 +31,11 @@ int	eat(t_philos *philo)
 	pthread_mutex_lock(philo->r_fork);
 	if (is_stop(philo) == STOP)
 		return (STOP);
-	print_msg(philo, "has taken a r_fork");
+	print_msg(philo, "has taken a fork");
 	pthread_mutex_lock(philo->l_fork);
 	if (is_stop(philo) == STOP)
 		return (STOP);
-	print_msg(philo, "has taken a l_fork");
+	print_msg(philo, "has taken a fork");
 	gettimeofday(&philo->last_meal_tm, NULL);
 	print_msg(philo, "is eating");
 	if (stop(philo, NUM_0) == STOP)
@@ -58,23 +70,16 @@ void	*play_philo(void *philo)
 	t_philos	*pho;
 
 	pho = (t_philos *)philo;
-
 	if (pho->p_idx % 2 != 0)
 		ft_usleep(pho->root->eat_tm);
-	while (1)
+	while (!usleep(200))
 	{
 		if (eat(pho) == STOP)
-		{
-			break;
-		}
+			break ;
 		else if (sleep_think(pho) == STOP)
-		{
-			break;
-		}
+			break ;
 		if (is_stop(pho) == STOP)
-		{
-			break;
-		}
+			break ;
 	}
 	return (NULL);
 }

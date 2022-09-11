@@ -94,8 +94,7 @@ void		all_free(t_root *root);
 long long	get_time(struct timeval cur);
 void		print_msg(t_philos *philo, char *msg);
 
-int	is_stop(t_philos *philo);
-void	ft_usleep(int t);
-int	stop(t_philos *philo, int flag);
+int			is_stop(t_philos *philo);
+void		ft_usleep(int t);
 
 #endif

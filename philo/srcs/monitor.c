@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/11 17:17:05 by gyumpark          #+#    #+#             */
+/*   Updated: 2022/09/11 17:18:14 by gyumpark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	die_check(t_philos *philo)
@@ -15,11 +27,11 @@ int	die_check(t_philos *philo)
 		return (STOP);
 	}
 	if (philo->root->philo_num == philo->root->philo_clear)
-		{
-			philo->root->stop_state = 1;
-			pthread_mutex_unlock(&philo->root->stop_mutex);
-			return (STOP);
-		}
+	{
+		philo->root->stop_state = 1;
+		pthread_mutex_unlock(&philo->root->stop_mutex);
+		return (STOP);
+	}
 	pthread_mutex_unlock(&philo->root->stop_mutex);
 	return (GO);
 }
@@ -30,7 +42,6 @@ int	monitorring_die(t_philos *philo)
 	{
 		return (STOP);
 	}
-	usleep(200);
 	if (die_check(philo) == STOP)
 	{
 		return (STOP);
@@ -43,11 +54,11 @@ void	*monitorring_thread(void *philo)
 	t_philos		*pho;
 
 	pho = (t_philos *)philo;
-	while (1)
+	while (!usleep(200))
 	{
 		if (monitorring_die(pho) == STOP)
 		{
-			break;
+			break ;
 		}
 	}
 	return (NULL);
