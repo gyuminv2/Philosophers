@@ -46,7 +46,6 @@ void	*monitorring_die(void *philo)
 	pho = (t_philos *)philo;
 	while (1)
 	{
-		sem_wait(pho->status);
 		sem_wait(pho->root->play);
 		gettimeofday(&cur, NULL);
 		if (get_time(cur) - get_time(pho->last_meal_tm) >= pho->root->die_tm)
@@ -57,7 +56,6 @@ void	*monitorring_die(void *philo)
 			return (NULL);
 		}
 		sem_post(pho->root->play);
-		sem_post(pho->status);
 	}
 	return (NULL);
 }

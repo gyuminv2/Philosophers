@@ -27,6 +27,8 @@
 # define INT_MAX 2147483647
 # define TRUE 1
 # define FALSE 0
+# define NUM_0 0
+# define NUM_1 1
 
 typedef struct s_philos
 {
@@ -34,7 +36,6 @@ typedef struct s_philos
 	int				total_eat;
 	char			*name;
 	pid_t			pid;
-	sem_t			*status;
 	struct s_root	*root;
 	struct timeval	last_meal_tm;
 }	t_philos;

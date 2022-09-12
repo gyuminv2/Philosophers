@@ -41,9 +41,9 @@ int	init_philos(t_root *root)
 	int	i;
 
 	i = 0;
-	root->play = ft_sem_init("play", TRUE);
-	root->stop = ft_sem_init("stop", FALSE);
-	root->clear_philo = ft_sem_init("clear_philo", FALSE);
+	root->play = ft_sem_init("play", NUM_1);
+	root->stop = ft_sem_init("stop", NUM_0);
+	root->clear_philo = ft_sem_init("clear_philo", NUM_0);
 	root->n_fork = ft_sem_init("n_fork", root->philo_num);
 	root->philos = (t_philos *)malloc(sizeof(t_philos) * root->philo_num);
 	if (!root->philos)
@@ -52,7 +52,6 @@ int	init_philos(t_root *root)
 	{
 		root->philos[i].p_idx = i + 1;
 		root->philos[i].name = ft_itoa(i);
-		root->philos[i].status = ft_sem_init(root->philos[i].name, TRUE);
 		root->philos[i].root = root;
 		i++;
 	}

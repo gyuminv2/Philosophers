@@ -21,7 +21,6 @@ void	wait_free(t_root *root)
 	while (i < root->philo_num)
 	{
 		waitpid(root->philos[i].pid, &status, 0);
-		sem_close(root->philos[i].status);
 		free(root->philos[i].name);
 		i++;
 	}

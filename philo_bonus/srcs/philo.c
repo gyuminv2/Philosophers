@@ -18,7 +18,6 @@ void	eat(t_philos *philo)
 	print_msg(philo, "has taken a fork");
 	sem_wait(philo->root->n_fork);
 	print_msg(philo, "has taken a fork");
-	sem_wait(philo->status);
 	gettimeofday(&philo->last_meal_tm, NULL);
 	print_msg(philo, "is eating");
 	philo->total_eat++;
@@ -27,7 +26,6 @@ void	eat(t_philos *philo)
 	usleep(philo->root->eat_tm * 1000);
 	sem_post(philo->root->n_fork);
 	sem_post(philo->root->n_fork);
-	sem_post(philo->status);
 }
 
 void	sleep_think(t_philos *philo)
