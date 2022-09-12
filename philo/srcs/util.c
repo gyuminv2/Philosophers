@@ -30,7 +30,6 @@ void	print_msg(t_philos *philo, char *msg)
 {
 	struct timeval	cur;
 
-	pthread_mutex_lock(&philo->root->write_mutex);
 	gettimeofday(&cur, NULL);
 	if (is_stop(philo) == GO)
 	{
@@ -42,6 +41,7 @@ void	print_msg(t_philos *philo, char *msg)
 	{
 		printf("%lld %d %s\n", get_time(cur) - \
 				get_time(philo->root->start_tm), philo->p_idx, msg);
+		pthread_mutex_unlock(&philo->root->write_mutex);
 	}
 }
 
@@ -62,6 +62,13 @@ int	is_stop(t_philos *philo)
 
 int	stop(t_philos *philo, int flag)
 {
+	if (flag == NUM_0)
+	{
+		pthread_mutex_unlock(&philo->root->stop_mutex);
+		ft_usleep(philo->root->eat_tm);
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+	}
 	if (flag == NUM_1)
 	{
 		pthread_mutex_unlock(&philo->root->stop_mutex);

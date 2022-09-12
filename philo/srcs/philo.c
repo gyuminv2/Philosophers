@@ -31,16 +31,19 @@ int	eat(t_philos *philo)
 	pthread_mutex_lock(philo->r_fork);
 	if (is_stop(philo) == STOP)
 		return (STOP);
+	pthread_mutex_lock(&philo->root->write_mutex);
 	print_msg(philo, "has taken a fork");
 	pthread_mutex_lock(philo->l_fork);
 	if (is_stop(philo) == STOP)
 		return (STOP);
+	pthread_mutex_lock(&philo->root->write_mutex);
 	print_msg(philo, "has taken a fork");
-	gettimeofday(&philo->last_meal_tm, NULL);
+	pthread_mutex_lock(&philo->root->write_mutex);
 	print_msg(philo, "is eating");
-	if (stop(philo, NUM_0) == STOP)
+	if (stop(philo, NUM_2) == STOP)
 		return (STOP);
 	pthread_mutex_lock(&philo->root->stop_mutex);
+	gettimeofday(&philo->last_meal_tm, NULL);
 	philo->total_eat++;
 	if (philo->total_eat == philo->root->must_eat_cnt)
 	{
@@ -48,10 +51,7 @@ int	eat(t_philos *philo)
 		if (stop(philo, NUM_1) == STOP)
 			return (STOP);
 	}
-	pthread_mutex_unlock(&philo->root->stop_mutex);
-	ft_usleep(philo->root->eat_tm);
-	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_unlock(philo->r_fork);
+	stop(philo, NUM_0);
 	return (GO);
 }
 
@@ -59,7 +59,9 @@ int	sleep_think(t_philos *philo)
 {
 	if (is_stop(philo) == STOP)
 		return (STOP);
+	pthread_mutex_lock(&philo->root->write_mutex);
 	print_msg(philo, "is sleeping");
+	pthread_mutex_lock(&philo->root->write_mutex);
 	print_msg(philo, "is thinking");
 	ft_usleep(philo->root->sleep_tm);
 	return (GO);

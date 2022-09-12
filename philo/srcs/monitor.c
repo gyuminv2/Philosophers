@@ -16,6 +16,7 @@ int	die_check(t_philos *philo)
 {
 	struct timeval	cur;
 
+	pthread_mutex_lock(&philo->root->write_mutex);
 	pthread_mutex_lock(&philo->root->stop_mutex);
 	gettimeofday(&cur, NULL);
 	if (get_time(cur) - get_time(philo->last_meal_tm) >= \
@@ -23,6 +24,7 @@ int	die_check(t_philos *philo)
 	{
 		philo->root->stop_state = 1;
 		pthread_mutex_unlock(&philo->root->stop_mutex);
+		pthread_mutex_lock(&philo->root->die_mutex);
 		print_msg(philo, "is died");
 		return (STOP);
 	}
@@ -30,9 +32,11 @@ int	die_check(t_philos *philo)
 	{
 		philo->root->stop_state = 1;
 		pthread_mutex_unlock(&philo->root->stop_mutex);
+		pthread_mutex_unlock(&philo->root->write_mutex);
 		return (STOP);
 	}
 	pthread_mutex_unlock(&philo->root->stop_mutex);
+	pthread_mutex_unlock(&philo->root->write_mutex);
 	return (GO);
 }
 
