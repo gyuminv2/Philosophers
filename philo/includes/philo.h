@@ -28,6 +28,7 @@
 # define SUCCESS 1
 # define FAIL 0
 # define GO 1
+# define DIE 1
 # define STOP 0
 # define NUM_0 0
 # define NUM_1 1
@@ -95,7 +96,6 @@ void		*monitorring_eating(void *philo);
 void		all_free(t_root *root);
 long long	get_time(struct timeval cur);
 void		print_msg(t_philos *philo, char *msg);
-
 int			is_stop(t_philos *philo);
 void		ft_usleep(int t);
 

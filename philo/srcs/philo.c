@@ -40,10 +40,10 @@ int	eat(t_philos *philo)
 	print_msg(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->root->write_mutex);
 	print_msg(philo, "is eating");
+	gettimeofday(&philo->last_meal_tm, NULL);
 	if (stop(philo, NUM_2) == STOP)
 		return (STOP);
 	pthread_mutex_lock(&philo->root->stop_mutex);
-	gettimeofday(&philo->last_meal_tm, NULL);
 	philo->total_eat++;
 	if (philo->total_eat == philo->root->must_eat_cnt)
 	{
@@ -74,11 +74,13 @@ void	*play_philo(void *philo)
 	pho = (t_philos *)philo;
 	if (pho->p_idx % 2 != 0)
 		ft_usleep(pho->root->eat_tm);
-	while (!usleep(200))
+	while (!usleep(300))
 	{
 		if (eat(pho) == STOP)
 			break ;
-		else if (sleep_think(pho) == STOP)
+		if (is_stop(pho) == STOP)
+			break ;
+		if (sleep_think(pho) == STOP)
 			break ;
 		if (is_stop(pho) == STOP)
 			break ;

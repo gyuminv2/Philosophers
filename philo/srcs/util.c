@@ -48,7 +48,7 @@ void	print_msg(t_philos *philo, char *msg)
 int	is_stop(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->root->stop_mutex);
-	if (philo->root->stop_state == 1)
+	if (philo->root->stop_state == DIE)
 	{
 		pthread_mutex_unlock(&philo->root->stop_mutex);
 		return (STOP);
