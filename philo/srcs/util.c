@@ -6,7 +6,7 @@
 /*   By: gyumpark <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 17:17:13 by gyumpark          #+#    #+#             */
-/*   Updated: 2022/09/11 17:17:14 by gyumpark         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:18:28 by gyumpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	all_free(t_root *root)
 {
 	free(root->philos);
 	free(root->n_fork);
+	free(root);
 }
 
 long long	get_time(struct timeval cur)
